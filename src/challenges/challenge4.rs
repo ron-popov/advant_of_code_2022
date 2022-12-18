@@ -1,5 +1,6 @@
 use log::{info, debug, error};
 use std::fmt;
+use std::collections::HashSet;
 
 struct Range {
     start: usize,
@@ -30,15 +31,25 @@ pub fn solve(user_input: Vec<String>) {
         let second_elf: Range = get_range(
             elfs_split.next().unwrap().clone().to_string());
 
-        
-        if first_elf.start <= second_elf.start && first_elf.end >= second_elf.end {
+        let mut first_set: HashSet<usize> = HashSet::new();
+        let mut second_set: HashSet<usize> = HashSet::new();
+        let mut total_set: HashSet<usize> = HashSet::new();
+
+        for i in first_elf.start..first_elf.end+1 {
+            first_set.insert(i);
+            total_set.insert(i);
+        }
+
+        for i in second_elf.start..second_elf.end+1 {
+            second_set.insert(i);
+            total_set.insert(i);
+        }
+
+        if first_set.len() + second_set.len() != total_set.len() {
+            debug!("{} and {} overlap", first_elf, second_elf);
             contains_count += 1;
-            debug!("{} is contained in {}", second_elf, first_elf);
-        } else if first_elf.start >= second_elf.start && first_elf.end <= second_elf.end {
-            contains_count += 1;
-            debug!("{} is contained in {}", first_elf, second_elf);
         }
     }
-
     info!("Total contains {} times", contains_count);
+    
 }
