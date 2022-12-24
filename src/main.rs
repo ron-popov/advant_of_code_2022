@@ -26,5 +26,5 @@ fn main() {
         input_data.push(line.unwrap());
     }
 
-    challenge5::solve(input_data.clone());
+    challenge05::solve(input_data.clone());
 }
