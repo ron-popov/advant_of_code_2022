@@ -78,13 +78,22 @@ pub fn solve(user_input: Vec<String>) {
             let move_to = (&cap[3]).parse::<usize>().unwrap();
             debug!("PARSED: Move {} from {} to {}", move_count, move_from, move_to);
 
+            let mut temp_stack: Vec<char> = vec![];
+
             for _ in 0..move_count {
                 let stack = stacks.get_mut(&move_from).unwrap();
                 let value = stack.remove(0);
 
-                let new_stack = stacks.get_mut(&move_to).unwrap();
-                new_stack.insert(0, value);
+                temp_stack.insert(0, value);
             }
+
+            let new_stack = stacks.get_mut(&move_to).unwrap();
+            
+            for v in temp_stack {
+                new_stack.insert(0, v);
+            }
+
+
         }
     }
 
